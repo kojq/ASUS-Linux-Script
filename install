@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+
+clear
+
+# TODO:
+# Detect hardware to determine if ROG kernel is needed (requires script to change constantly; not difficult)
+# Must work with sudo and doas
+
+read -p "Install the kernel? (y/n): " install_kernel
+read -p "Install rog-control-center? (y/n): " install_rog_control_center
+
+if [[ $install_rog_control_center == "n" ]]; then
+  read -p "Install asusctl? (y/n): " install_asusctl
+  read -p "Install supergfxctl? (y/n): " install_supergfxctl
+fi
+
+if [ -f /etc/os-release ]; then
+  source /etc/os-release
+  if [[ "$ID" == "fedora" ]]; then
+    echo "Fedora"
+  elif [[ "$ID" == "arch" ]]; then
+    pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+    pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
+    grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf
+    if [[ $install_kernel == "y" ]]; then
+      pacman -S --noconfirm --needed linux-g14
+    fi
+    if [[ $install_rog_control_center == "y" ]]; then
+      pacman -S --noconfirm --needed rog-control-center
+      systemctl enable --now power-profiles-daemon supergfxd
+    else
+      if [[ $install_asusctl == "y" ]]; then
+        pacman -S --noconfirm --needed asusctl
+        systemctl enable --now power-profiles-daemon
+      fi
+      if [[ $install_supergfxctl == "y" ]]; then
+        pacman -S --noconfirm --needed supergfxctl
+        systemctl enable --now supergfxd
+      fi
+    fi
+  elif [[ "$ID" == "opensuse" ]]; then
+    echo "openSUSE"
+  else
+    echo "Unsupported Distribution"
+  fi
+else
+  echo "This script requires /etc/os-release to be present."
+fi
