@@ -1,5 +1,5 @@
 <div align=center>
-  <img src=logo-rog.svg height=140/>
+  <img src=ROG-LOGO.svg height=140/>
 
   # ASUS Linux Script
 
