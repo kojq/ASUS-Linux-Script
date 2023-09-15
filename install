@@ -15,20 +15,20 @@ done
 
 echo "Install rog-control-center (complete utility with GUI)? (y/n):"
 select install_rog_control_center in $(y n)
-  do [[ -n $install_rog_control_center ]] && break || echo Invalid selection. Try again.
+  do [[ -n $install_rog_control_center ]] && break || echo "Invalid selection. Try again."
 done
 
 if [[ $install_rog_control_center == "n" ]]; then
   clear
   echo "Install asusctl (manages anime matrix, keyboard brightness, charge limiting, bios/efivar control, power profile switching, fan curves (if supported))? (y/n):"
   select install_asusctl in $(y n)
-    do [[ -n $install_asusctl ]] && break || echo Invalid selection. Try again.
+    do [[ -n $install_asusctl ]] && break || echo "Invalid selection. Try again."
   done
 
   clear
   echo "Install supergfxctl (manages dGPU and iGPU)? (y/n):"
   select install_supergfxctl in $(y n)
-    do [[ -n $install_supergfxctl ]] && break || echo Invalid selection. Try again.
+    do [[ -n $install_supergfxctl ]] && break || echo "Invalid selection. Try again."
   done
 fi
 
