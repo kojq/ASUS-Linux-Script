@@ -2,9 +2,7 @@
 set -e
 
 clear
-if [[ $(uname -r) != *rog* && $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ ]]; then
-  echo Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
-fi
+[[ $(uname -r) != *rog* && $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ ]] && echo Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
 
 echo "Install rog-control-center (complete utility with GUI)? (y/n):"
 select install_rog_control_center in $(y n)
