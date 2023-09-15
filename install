@@ -5,15 +5,15 @@ clear
 [ -f /etc/os-release ] && . /etc/os-release
 case $ID in
   arch)
-    pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf
+    repo="pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf"
     install="pacman -S --noconfirm --needed"
     ;;
   fedora)
-    dnf copr enable lukenukem/asus-linux
+    repo="dnf copr enable lukenukem/asus-linux"
     install="dnf install -y"
     ;;
   opensuse-tumbleweed)
-    zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
+    repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
     install="zypper -y in"
     ;;
   *)
@@ -25,11 +25,12 @@ esac
 
 echo ROG GUI includes asusctl and supergfxctl, asusctl is a general CLI utility, and supergfxctl is a GPU CLI utility.
 PS3='Select an option indicating the packages to install: '
-select packages in "rog-gui" "asusctl supergfxctl" "asusctl" supergfxctl"; do
+select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"; do
   [[ $packages ]] && break || echo Invalid selection. Try again.
 done
 
 clear
+$repo
 $install $packages
 systemctl enable --now power-profiles-daemon supergfxd
 systemctl start asusd
