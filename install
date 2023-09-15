@@ -2,13 +2,9 @@
 set -e
 
 clear
-
-valid_values=("GV601VI" "GV601VV" "GV601VU" "E410MA")
-board_name=$(cat /sys/devices/virtual/dmi/id/board_name)
-
-for value in "${valid_values[@]}"; do
-  if [ "$board_name" = "$value" ]; then
-    echo "Your laptop has patches that aren't in your kernel yet!"
+for value in GV601VI GV601VV GV601VU E410MA; do
+  if [ $(cat /sys/devices/virtual/dmi/id/board_name) = $value ]; then
+    echo "Your laptop has patches available that aren't in your kernel yet!"
     echo "If you want these patches, install the ROG kernel by following the process from asus-linux.org"
   fi
 done
