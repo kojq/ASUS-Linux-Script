@@ -20,7 +20,7 @@ This script is in the pre-alpha stage.
 
 1. Keep your system up to date
 
-2. Run the following command:
+2. Run the following command with the appropriate elevated privileges:
 
 ```ShellSession
 bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/install)
