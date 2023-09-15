@@ -70,7 +70,7 @@ if [ -f /etc/os-release ]; then
       fi
     fi
   elif [[ "$ID" == "opensuse-tumbleweed" ]]; then
-    zypper ar --priority 50 --refresh https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
+    zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
     if [[ $install_rog_control_center == "y" ]]; then
       zypper -y in asusctl-rog-gui
       systemctl enable --now power-profiles-daemon supergfxd
