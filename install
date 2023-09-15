@@ -3,9 +3,15 @@ set -e
 
 clear
 
-# TODO:
-# Must work with sudo and doas
-# Compare hardware to the list to suggest if the ROG kernel is needed
+valid_values=("GV601VI" "GV601VV" "GV601VU" "E410MA")
+board_name=$(cat /sys/devices/virtual/dmi/id/board_name)
+
+for value in "${valid_values[@]}"; do
+  if [ "$board_name" = "$value" ]; then
+    echo "Your laptop has patches that aren't in your kernel yet!"
+    echo "If you want these patches, install the ROG kernel by following the process from asus-linux.org"
+  fi
+done
 
 read -p "Install rog-control-center? (y/n): " install_rog_control_center
 if [[ $install_rog_control_center == "n" ]]; then
