@@ -13,10 +13,23 @@ for value in "${valid_values[@]}"; do
   fi
 done
 
-read -p "Install rog-control-center? (y/n): " install_rog_control_center
+echo "Install rog-control-center (complete utility with GUI)? (y/n):"
+select install_rog_control_center in $(y n)
+  do [[ -n $install_rog_control_center ]] && break || echo Invalid selection. Try again.
+done
+
 if [[ $install_rog_control_center == "n" ]]; then
-  read -p "Install asusctl? (y/n): " install_asusctl
-  read -p "Install supergfxctl? (y/n): " install_supergfxctl
+  clear
+  echo "Install asusctl (manages anime matrix, keyboard brightness, charge limiting, bios/efivar control, power profile switching, fan curves (if supported))? (y/n):"
+  select install_asusctl in $(y n)
+    do [[ -n $install_asusctl ]] && break || echo Invalid selection. Try again.
+  done
+
+  clear
+  echo "Install supergfxctl (manages dGPU and iGPU)? (y/n):"
+  select install_supergfxctl in $(y n)
+    do [[ -n $install_supergfxctl ]] && break || echo Invalid selection. Try again.
+  done
 fi
 
 if [ -f /etc/os-release ]; then
