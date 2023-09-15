@@ -50,7 +50,7 @@ if [ -f /etc/os-release ]; then
         systemctl enable --now supergfxd
       fi
     fi
-  elif [[ "$ID" == "opensuse" ]]; then
+  elif [[ "$ID" == "opensuse-tumbleweed" ]]; then
     zypper ar --priority 50 --refresh https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
     if [[ $install_rog_control_center == "y" ]]; then
       zypper -y in asusctl-rog-gui
