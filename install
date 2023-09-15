@@ -32,5 +32,5 @@ done
 clear
 $repo
 $install $packages
-[[ $packages =~ asusctl ]] && systemctl enable --now power-profiles-daemon && systemctl start asusd
-[[ $packages =~ supergfxctl ]] && systemctl enable --now supergfxd
+[[ $packages =~ (rog-gui|asusctl) ]] && systemctl enable --now power-profiles-daemon && systemctl start asusd
+[[ $packages =~ (rog-gui|supergfxctl) ]] && systemctl enable --now supergfxd
