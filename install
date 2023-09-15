@@ -2,83 +2,34 @@
 set -e
 
 clear
+[ -f /etc/os-release ] && . /etc/os-release
+case $ID in
+  arch)
+    pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf
+    install="pacman -S --noconfirm --needed"
+    ;;
+  fedora)
+    dnf copr enable lukenukem/asus-linux
+    install="dnf install -y"
+    ;;
+  opensuse-tumbleweed)
+    zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
+    install="zypper -y in"
+    ;;
+  *)
+    echo Unsupported distribution. Exiting. && exit 1
+    ;;
+esac
+
 [[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ && $(uname -r) != *rog* ]] && echo Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
 
-echo "Install rog-control-center (complete utility with GUI)? (y/n):"
-select install_rog_control_center in $(y n)
-  do [[ -n $install_rog_control_center ]] && break || echo "Invalid selection. Try again."
+echo ROG GUI includes asusctl and supergfxctl, asusctl is a general CLI utility, and supergfxctl is a GPU CLI utility.
+PS3='Select an option indicating the packages to install: '
+select packages in "rog-gui" "asusctl supergfxctl" "asusctl" supergfxctl"; do
+  [[ $packages ]] && break || echo Invalid selection. Try again.
 done
 
-if [[ $install_rog_control_center == "n" ]]; then
-  clear
-  echo "Install asusctl (manages anime matrix, keyboard brightness, charge limiting, bios/efivar control, power profile switching, fan curves (if supported))? (y/n):"
-  select install_asusctl in $(y n)
-    do [[ -n $install_asusctl ]] && break || echo "Invalid selection. Try again."
-  done
-
-  clear
-  echo "Install supergfxctl (manages dGPU and iGPU)? (y/n):"
-  select install_supergfxctl in $(y n)
-    do [[ -n $install_supergfxctl ]] && break || echo "Invalid selection. Try again."
-  done
-fi
-
-if [ -f /etc/os-release ]; then
-  source /etc/os-release
-  if [[ "$ID" == "fedora" ]]; then
-    dnf copr enable lukenukem/asus-linux
-    if [[ $install_rog_control_center == "y" ]]; then
-      dnf install -y asusctl-rog-gui
-      systemctl enable --now power-profiles-daemon supergfxd
-      systemctl start asusd
-    else
-      if [[ $install_asusctl == "y" ]]; then
-        dnf install -y asusctl
-        systemctl enable --now power-profiles-daemon
-        systemctl start asusd
-      fi
-      if [[ $install_supergfxctl == "y" ]]; then
-        dnf install -y supergfxctl
-        systemctl enable --now supergfxd
-      fi
-  elif [[ "$ID" == "arch" ]]; then
-    pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-    pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
-    grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf
-    if [[ $install_rog_control_center == "y" ]]; then
-      pacman -S --noconfirm --needed rog-control-center
-      systemctl enable --now power-profiles-daemon supergfxd
-      systemctl start asusd
-    else
-      if [[ $install_asusctl == "y" ]]; then
-        pacman -S --noconfirm --needed asusctl
-        systemctl enable --now power-profiles-daemon
-        systemctl start asusd
-      fi
-      if [[ $install_supergfxctl == "y" ]]; then
-        pacman -S --noconfirm --needed supergfxctl
-        systemctl enable --now supergfxd
-      fi
-    fi
-  elif [[ "$ID" == "opensuse-tumbleweed" ]]; then
-    zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
-    if [[ $install_rog_control_center == "y" ]]; then
-      zypper -y in asusctl-rog-gui
-      systemctl enable --now power-profiles-daemon supergfxd
-      systemctl start asusd
-    else
-      if [[ $install_asusctl == "y" ]]; then
-        zypper -y in asusctl
-        systemctl enable --now power-profiles-daemon
-        systemctl start asusd
-      fi
-      if [[ $install_supergfxctl == "y" ]]; then
-        zypper -y in supergfxctl
-        systemctl enable --now supergfxd
-      fi
-  else
-    echo "Unsupported Distribution"
-  fi
-else
-  echo "This script requires /etc/os-release to be present."
-fi
+clear
+$install $packages
+systemctl enable --now power-profiles-daemon supergfxd
+systemctl start asusd
