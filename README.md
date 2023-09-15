@@ -16,8 +16,6 @@ Disrespect is not tolerated. Feel free to [join the Discord server](https://disc
 
 ## Usage
 
-This script is in the beta stage.
-
 1. Keep your system up to date
 
 2. Run the following command with the appropriate elevated privileges:
