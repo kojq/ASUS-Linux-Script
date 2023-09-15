@@ -8,7 +8,6 @@ clear
 # Compare hardware to the list to suggest if the ROG kernel is needed
 
 read -p "Install rog-control-center? (y/n): " install_rog_control_center
-
 if [[ $install_rog_control_center == "n" ]]; then
   read -p "Install asusctl? (y/n): " install_asusctl
   read -p "Install supergfxctl? (y/n): " install_supergfxctl
@@ -17,7 +16,21 @@ fi
 if [ -f /etc/os-release ]; then
   source /etc/os-release
   if [[ "$ID" == "fedora" ]]; then
-    echo "Fedora"
+    dnf copr enable lukenukem/asus-linux
+    if [[ $install_rog_control_center == "y" ]]; then
+      dnf install -y asusctl-rog-gui
+      systemctl enable --now power-profiles-daemon supergfxd
+      systemctl start asusd
+    else
+      if [[ $install_asusctl == "y" ]]; then
+        dnf install -y asusctl
+        systemctl enable --now power-profiles-daemon
+        systemctl start asusd
+      fi
+      if [[ $install_supergfxctl == "y" ]]; then
+        dnf install -y supergfxctl
+        systemctl enable --now supergfxd
+      fi
   elif [[ "$ID" == "arch" ]]; then
     pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
     pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35
@@ -25,10 +38,12 @@ if [ -f /etc/os-release ]; then
     if [[ $install_rog_control_center == "y" ]]; then
       pacman -S --noconfirm --needed rog-control-center
       systemctl enable --now power-profiles-daemon supergfxd
+      systemctl start asusd
     else
       if [[ $install_asusctl == "y" ]]; then
         pacman -S --noconfirm --needed asusctl
         systemctl enable --now power-profiles-daemon
+        systemctl start asusd
       fi
       if [[ $install_supergfxctl == "y" ]]; then
         pacman -S --noconfirm --needed supergfxctl
@@ -36,7 +51,21 @@ if [ -f /etc/os-release ]; then
       fi
     fi
   elif [[ "$ID" == "opensuse" ]]; then
-    echo "openSUSE"
+    zypper ar --priority 50 --refresh https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux
+    if [[ $install_rog_control_center == "y" ]]; then
+      zypper -y in asusctl-rog-gui
+      systemctl enable --now power-profiles-daemon supergfxd
+      systemctl start asusd
+    else
+      if [[ $install_asusctl == "y" ]]; then
+        zypper -y in asusctl
+        systemctl enable --now power-profiles-daemon
+        systemctl start asusd
+      fi
+      if [[ $install_supergfxctl == "y" ]]; then
+        zypper -y in supergfxctl
+        systemctl enable --now supergfxd
+      fi
   else
     echo "Unsupported Distribution"
   fi
