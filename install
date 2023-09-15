@@ -15,6 +15,8 @@ case $ID in
   opensuse-tumbleweed)
     repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
     install="zypper -y in"
+    remove_conflict_asusctl="zypper -y rm tlp"
+    remove_conflict_supergfxctl="zypper -y rm suse-prime"
     ;;
   *)
     echo Unsupported distribution. Exiting. && exit 1
@@ -32,5 +34,5 @@ done
 clear
 $repo
 $install $packages
-[[ $packages =~ (rog-gui|asusctl) ]] && systemctl enable --now power-profiles-daemon && systemctl start asusd
-[[ $packages =~ (rog-gui|supergfxctl) ]] && systemctl enable --now supergfxd
+[[ $packages =~ (rog-gui|asusctl) ]] && remove_conflict_asusctl && systemctl enable --now power-profiles-daemon && systemctl start asusd
+[[ $packages =~ (rog-gui|supergfxctl) ]] && remove_conflict_supergfxctl && systemctl enable --now supergfxd
