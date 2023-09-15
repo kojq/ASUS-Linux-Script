@@ -9,9 +9,11 @@
 ## Community
 
 ### ASUS Linux Server
+
 [Join the Discord server](https://discord.com/invite/4ZKGd7Un5t). 😊
 
 ### kojq's Server
+
 Disrespect is not tolerated. Feel free to [join the Discord server](https://discord.com/invite/C6NdvU5bzN).
 
 ## Usage
