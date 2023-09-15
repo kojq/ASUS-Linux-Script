@@ -16,9 +16,11 @@ Disrespect is not tolerated. Feel free to [join the Discord server](https://disc
 
 ## Usage
 
-This is not ready yet.
+This script is in the pre-alpha stage.
 
-Run the following command:
+1. Keep your system up to date
+
+2. Run the following command:
 
 ```ShellSession
 bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/install)
@@ -26,8 +28,7 @@ bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/instal
 
 ## Features
 
-- Detect distribution to install on Fedora, Arch, and openSUSE
-- Detect whether the ROG kernel is needed for additional functionality
+- Install ASUS Linux software on Fedora Workstation, Arch Linux, and openSUSE Tumbleweed
 
 ## Build
 
