@@ -23,10 +23,10 @@ case $ID in
     ;;
 esac
 
-[[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ && $(uname -r) != *rog* ]] && echo Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
+[[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ && $(uname -r) != *rog* ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
 
 echo ROG GUI includes asusctl and supergfxctl, asusctl is a general CLI utility, and supergfxctl is a GPU CLI utility.
-PS3='Select an option indicating the packages to install (1-4): '
+PS3='Select an option indicating the package(s) to install (1-4): '
 select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"
 do [[ $packages ]] && break || echo Invalid selection. Try again.
 done
