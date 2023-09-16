@@ -28,7 +28,7 @@ bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/instal
 
 ## Features
 
-- Install ASUS Linux software on Fedora Workstation, Arch Linux, and openSUSE Tumbleweed
+- Install ASUS Linux software on Arch Linux, EndeavourOS, Garuda Linux, Fedora Workstation, Fedora Spins, and openSUSE Tumbleweed
 
 ## Build
 
