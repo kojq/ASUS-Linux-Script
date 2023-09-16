@@ -4,7 +4,7 @@ set -e
 clear
 . /etc/os-release
 case $ID in
-  arch)
+  arch|endeavouros)
     repo="pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf"
     install="pacman -S --noconfirm --needed"
     ;;
