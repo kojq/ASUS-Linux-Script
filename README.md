@@ -28,6 +28,7 @@ bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/instal
 
 ## Features
 
+- Notify the user if their kernel does not have patches that are available in the ROG kernel
 - Install ASUS Linux software on various distributions
   - Arch Linux
   - EndeavourOS
