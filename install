@@ -4,27 +4,26 @@ set -e
 clear
 . /etc/os-release
 case $ID in
-  arch|endeavouros|garuda)
-    repo="pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf"
-    install="pacman -S --noconfirm --needed"
-    ;;
-  fedora)
-    repo="dnf copr enable lukenukem/asus-linux"
-    install="dnf install -y"
-    ;;
-  opensuse-tumbleweed)
-    repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
-    install="zypper -y in"
-    remove_conflict_asusctl="zypper -y rm tlp"
-    remove_conflict_supergfxctl="zypper -y rm suse-prime"
-    ;;
-  *)
-    echo Unsupported distribution. Exiting. && exit 1
-    ;;
+arch|endeavouros|garuda)
+repo="pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf"
+install="pacman -S --noconfirm --needed"
+;;
+fedora)
+repo="dnf copr enable lukenukem/asus-linux"
+install="dnf install -y"
+;;
+opensuse-tumbleweed)
+repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
+install="zypper -y in"
+remove_conflict_asusctl="zypper -y rm tlp"
+remove_conflict_supergfxctl="zypper -y rm suse-prime"
+;;
+*)
+echo Unsupported distribution. Exiting. && exit 1
+;;
 esac
 
 [[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601VI|GV601VV|GV601VU|E410MA)$ && $(uname -r) != *rog* ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
-
 echo asusctl is a general CLI utility. supergfxctl is a GPU CLI utility. ROG GUI is an interface including both utilities.
 PS3='Select an option indicating the package(s) to install (1-4): '
 select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"
