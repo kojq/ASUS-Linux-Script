@@ -19,7 +19,7 @@ remove_conflict_asusctl="zypper -y rm tlp"
 remove_conflict_supergfxctl="zypper -y rm suse-prime"
 ;;
 silverblue)
-repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/pacman.conf || echo -e '[copr:copr.fedorainfracloud.org:lukenukem:asus-linux]\nname=Copr repo for asus-linux owned by lukenukem\nbaseurl=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/fedora-$releasever-$basearch/\ntype=rpm-md\nskip_if_unavailable=True\ngpgcheck=1\ngpgkey=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/pubkey.gpg\nrepo_gpgcheck=0\nenabled=1\nenabled_metadata=1' >> /etc/yum.repos.d/asus.repo"
+repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/yum.repos.d/asus.repo || echo -e '[copr:copr.fedorainfracloud.org:lukenukem:asus-linux]\nname=Copr repo for asus-linux owned by lukenukem\nbaseurl=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/fedora-$releasever-$basearch/\ntype=rpm-md\nskip_if_unavailable=True\ngpgcheck=1\ngpgkey=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/pubkey.gpg\nrepo_gpgcheck=0\nenabled=1\nenabled_metadata=1' >> /etc/yum.repos.d/asus.repo"
 install="rpm-ostree install"
 ;;
 *)
