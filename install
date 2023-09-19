@@ -34,6 +34,8 @@ select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"
 do [[ $packages ]] && break || echo Invalid selection. Try again.
 done
 
+[[ $packages == rog-gui ]] && packages=$([[ $ID == arch ]] && echo asusctl-rog-gui || echo rog-control-center)
+
 clear
 $repo
 $install $packages
