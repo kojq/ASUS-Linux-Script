@@ -11,22 +11,17 @@ install="pacman -S --noconfirm --needed"
 fedora)
 repo="dnf copr enable lukenukem/asus-linux"
 install="dnf install -y"
+if [[ $VARIANT_ID == silverblue ]]
+then
+repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/yum.repos.d/asus.repo || echo -e '[copr:copr.fedorainfracloud.org:lukenukem:asus-linux]\nname=Copr repo for asus-linux owned by lukenukem\nbaseurl=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/fedora-$releasever-$basearch/\ntype=rpm-md\nskip_if_unavailable=True\ngpgcheck=1\ngpgkey=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/pubkey.gpg\nrepo_gpgcheck=0\nenabled=1\nenabled_metadata=1' >> /etc/yum.repos.d/asus.repo"
+install="rpm-ostree install"
+fi
 ;;
 opensuse-tumbleweed)
 repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
 install="zypper -y in"
 remove_conflict_asusctl="zypper -y rm tlp"
 remove_conflict_supergfxctl="zypper -y rm suse-prime"
-;;
-*)
-echo Unsupported distribution. Exiting. && exit 1
-;;
-esac
-
-case $VARIANT_ID in
-silverblue)
-repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/yum.repos.d/asus.repo || echo -e '[copr:copr.fedorainfracloud.org:lukenukem:asus-linux]\nname=Copr repo for asus-linux owned by lukenukem\nbaseurl=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/fedora-$releasever-$basearch/\ntype=rpm-md\nskip_if_unavailable=True\ngpgcheck=1\ngpgkey=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/pubkey.gpg\nrepo_gpgcheck=0\nenabled=1\nenabled_metadata=1' >> /etc/yum.repos.d/asus.repo"
-install="rpm-ostree install"
 ;;
 *)
 echo Unsupported distribution. Exiting. && exit 1
