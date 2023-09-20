@@ -38,6 +38,7 @@ bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/instal
   - Fedora Silverblue
   - openSUSE Tumbleweed
   - openSUSE MicroOS
+  - openSUSE Leap
 - Notify the user if their kernel does not have patches that are available in the ROG kernel
   - False positive for customized kernels that contain patches without the ROG name
 
