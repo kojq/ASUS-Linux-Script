@@ -3,7 +3,7 @@ set -e
 
 clear
 . /etc/os-release
-case ${VARIANT_ID:-$ID} in
+case $ID in
 arch|endeavouros|garuda)
 repo="pacman-key -r 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && pacman-key --lsign-key 8F654886F17D497FEFE3DB448B15A6B0E9A3FA35 && grep g14 /etc/pacman.conf || echo -e '\n[g14]\nServer = https://arch.asus-linux.org' >> /etc/pacman.conf"
 install="pacman -S --noconfirm --needed"
@@ -18,6 +18,12 @@ install="zypper -y in"
 remove_conflict_asusctl="zypper -y rm tlp"
 remove_conflict_supergfxctl="zypper -y rm suse-prime"
 ;;
+*)
+echo Unsupported distribution. Exiting. && exit 1
+;;
+esac
+
+case $VARIANT_ID in
 silverblue)
 repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/yum.repos.d/asus.repo || echo -e '[copr:copr.fedorainfracloud.org:lukenukem:asus-linux]\nname=Copr repo for asus-linux owned by lukenukem\nbaseurl=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/fedora-$releasever-$basearch/\ntype=rpm-md\nskip_if_unavailable=True\ngpgcheck=1\ngpgkey=https://download.copr.fedorainfracloud.org/results/lukenukem/asus-linux/pubkey.gpg\nrepo_gpgcheck=0\nenabled=1\nenabled_metadata=1' >> /etc/yum.repos.d/asus.repo"
 install="rpm-ostree install"
@@ -39,5 +45,5 @@ done
 clear
 $repo
 $install $packages
-[[ $packages =~ (rog-gui|asusctl) ]] && $remove_conflict_asusctl && systemctl enable --now power-profiles-daemon && systemctl start asusd
-[[ $packages =~ (rog-gui|supergfxctl) ]] && $remove_conflict_supergfxctl && systemctl enable --now supergfxd
+[[ $packages =~ (*rog*|asusctl) ]] && $remove_conflict_asusctl && systemctl enable --now power-profiles-daemon && systemctl start asusd
+[[ $packages =~ (*rog*|supergfxctl) ]] && $remove_conflict_supergfxctl && systemctl enable --now supergfxd
