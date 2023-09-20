@@ -22,12 +22,12 @@ repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/
 install="zypper -y in"
 remove_conflict_asusctl="zypper -y rm tlp"
 remove_conflict_supergfxctl="zypper -y rm suse-prime"
-if [[ $VARIANT_ID == microos ]]
-then
+;;
+opensuse-microos)
+repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
 install="transactional-update -n -c pkg in"
 remove_conflict_asusctl="transactional-update -n -c pkg rm tlp"
 remove_conflict_supergfxctl="transactional-update -n -c pkg rm suse-prime"
-fi
 ;;
 *)
 echo Unsupported distribution. Exiting. && exit 1
