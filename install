@@ -34,7 +34,7 @@ echo Unsupported distribution. Exiting. && exit 1
 ;;
 esac
 
-[[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ ^(GV601V*|E410MA)$ && $(uname -r) != *rog* ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
+[[ $(cat /sys/devices/virtual/dmi/id/board_name) =~ GV601V|E410MA && $(uname -r) != *rog* || $(uname -r | cut -d. -f1-2) < 6.6 ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
 echo asusctl is a general CLI utility. supergfxctl is a GPU CLI utility. ROG GUI is an interface including both utilities.
 PS3='Select an option indicating the package(s) to install (1-4): '
 select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"
@@ -46,5 +46,5 @@ done
 clear
 $repo
 $install $packages
-[[ $packages =~ (*rog*|asusctl) ]] && $remove_conflict_asusctl && systemctl enable --now power-profiles-daemon && systemctl start asusd
-[[ $packages =~ (*rog*|supergfxctl) ]] && $remove_conflict_supergfxctl && systemctl enable --now supergfxd
+[[ $packages =~ rog|asusctl ]] && $remove_conflict_asusctl && systemctl enable --now power-profiles-daemon && systemctl start asusd
+[[ $packages =~ rog|supergfxctl ]] && $remove_conflict_supergfxctl && systemctl enable --now supergfxd
