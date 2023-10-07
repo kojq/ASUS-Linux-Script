@@ -40,7 +40,7 @@ bash <(curl https://raw.githubusercontent.com/kojq/ASUS-Linux-Script/main/instal
   - openSUSE Leap
   - openSUSE MicroOS
 - Notify the user if their kernel does not have patches that are available in the ROG kernel
-  - False positive for customized kernels that contain patches without the ROG name
+  - False positive for customized kernels without the ROG name that contain the patches
 
 ## Build
 
