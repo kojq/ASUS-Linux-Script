@@ -34,7 +34,7 @@ echo Unsupported distribution. Exiting. && exit 1
 ;;
 esac
 
-[[ $(</sys/devices/virtual/dmi/id/board_name) =~ GV601V|E410MA && $(uname -r) != *rog* && $(uname -r | cut -d. -f1-2) < 6.6 ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel.
+[[ $(</sys/devices/virtual/dmi/id/board_name) =~ GS650P|GA402X|GU604V|GU603V|GV601V|GZ301V|ALLY|G614J|G634J|G614JI|G713P|H7604JV && $(uname -r) != *rog* && $(uname -r | cut -d. -f1-2) < 6.6 ]] && echo NOTE: Your kernel is missing some features! Follow directions on asus-linux.org to install the ROG kernel. Missing Feature: DSD properties for ASUS laptops to properly use CS35L41.
 echo asusctl is a general CLI utility. supergfxctl is a GPU CLI utility. ROG GUI is an interface including both utilities.
 PS3='Select an option indicating the package(s) to install (1-4): '
 select packages in "rog-gui" "asusctl supergfxctl" "asusctl" "supergfxctl"
