@@ -17,7 +17,7 @@ repo="grep copr:copr.fedorainfracloud.org:lukenukem:asus-linux /etc/yum.repos.d/
 install="rpm-ostree install"
 fi
 ;;
-opensuse-tumbleweed|opensuse-leap)
+opensuse-tumbleweed)
 repo="zypper ar -f https://download.opensuse.org/repositories/home:/luke_nukem:/asus/openSUSE_Tumbleweed/ asus-linux"
 install="zypper -y in"
 remove_conflict_asusctl="zypper -y rm tlp"
